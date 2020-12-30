@@ -1,0 +1,8 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table techmobi_multidb_domains'
+    - builder_table_create_techmobi_multidb_domains.php
+1.0.3:
+    - 'Created table techmobi_multidb_multisites'
+    - builder_table_create_techmobi_multidb_multisites.php

@@ -1,0 +1,10 @@
+name: Domains
+form: $/techmobi/multidb/models/domain/fields.yaml
+modelClass: Techmobi\Multidb\Models\Domain
+defaultRedirect: techmobi/multidb/domains
+create:
+    redirect: 'techmobi/multidb/domains/update/:id'
+    redirectClose: techmobi/multidb/domains
+update:
+    redirect: techmobi/multidb/domains
+    redirectClose: techmobi/multidb/domains

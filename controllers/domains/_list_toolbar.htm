@@ -1,0 +1,44 @@
+<div data-control="toolbar">
+        <a href="<?= Backend::url('techmobi/multidb/domains/create') ?>" class="btn btn-primary oc-icon-plus"><?= e(trans('backend::lang.form.create')) ?></a>
+        
+    <button
+        class="btn btn-default oc-icon-cloud-upload"
+        style="background-color: purple"
+        disabled="disabled"
+        onclick="$(this).data('request-data', {
+            checked: $('.control-list').listWidget('getChecked')
+        })"
+        data-request="onForceUpdateSelected"
+        data-request-confirm="<?= e(trans('techmobi.multidb::lang.list.force_sync_selected_comment')) ?>"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', true)"
+        data-stripe-load-indicator>
+        <?= e(trans('techmobi.multidb::lang.list.force_sync_selected')) ?>
+    </button>
+    <button
+        class="btn btn-default oc-icon-cloud-upload" 
+        style="background-color: orange"     
+        data-request="onForceUpdateAll"
+        data-request-confirm="<?= e(trans('techmobi.multidb::lang.list.force_sync_all_comment')) ?>"        
+        data-stripe-load-indicator>
+        <?= e(trans('techmobi.multidb::lang.list.force_sync_all')) ?>
+    </button>
+
+    <button
+        class="btn btn-default oc-icon-trash-o"
+        disabled="disabled"
+        onclick="$(this).data('request-data', {
+            checked: $('.control-list').listWidget('getChecked')
+        })"
+        data-request="onDelete"
+        data-request-confirm="<?= e(trans('backend::lang.list.delete_selected_confirm')) ?>"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', true)"
+        data-stripe-load-indicator>
+        <?= e(trans('backend::lang.list.delete_selected')) ?>
+    </button>
+</div>

@@ -1,0 +1,51 @@
+fields:
+    name:
+        label: 'techmobi.multidb::lang.labels.name'
+        span: auto
+        type: text
+    sites:
+        label: 'techmobi.multidb::lang.labels.domains'
+        span: auto
+        type: checkboxlist
+    has_sync_update:
+        label: 'techmobi.multidb::lang.labels.has_sync_update'
+        span: auto
+        type: switch
+    # //TODO 
+    # has_user_db:
+    #       label: 'techmobi.multidb::lang.labels.has_user_db'
+    #       span: full
+    #       type: switch
+    #       comment: 'techmobi.multidb::lang.comments.has_user_db'
+    #   db_host:
+    #       label: 'techmobi.multidb::lang.labels.db_host'
+    #       span: auto
+    #       trigger:
+    #           action: show
+    #           field: has_user_db
+    #           condition: checked
+    #       type: text
+    #   db_port:
+    #       label: 'techmobi.multidb::lang.labels.db_port'
+    #       span: auto
+    #       type: text
+    #       trigger:
+    #           action: show
+    #           field: has_user_db
+    #           condition: checked
+    #   db_user:
+    #       label: 'techmobi.multidb::lang.labels.db_user'
+    #       span: auto
+    #       type: text
+    #       trigger:
+    #           action: show
+    #           field: has_user_db
+    #           condition: checked
+    #   db_pass:
+    #       label: 'techmobi.multidb::lang.labels.db_pass'
+    #       span: auto
+    #       type: text
+    #       trigger:
+    #           action: show
+    #           field: has_user_db
+    #           condition: checked   

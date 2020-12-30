@@ -1,0 +1,13 @@
+{
+    "name": "techmobi/multidb",
+    "type": "october-plugin",
+    "description": "Plugin for OctoberCMS allowing to assign different database to different domains",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roni Sommerfeld - 4Tech.mobi",
+            "email": "roni@4tech.mobi"
+        }
+    ],
+    "require": {}
+}

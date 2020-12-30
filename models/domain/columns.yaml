@@ -1,0 +1,11 @@
+columns:
+    id:
+        label: ID
+        type: number
+        width: 60px
+    name:
+        label: 'techmobi.multidb::lang.labels.name'
+        type: text
+    db_name:
+        label: 'techmobi.multidb::lang.labels.db_name'
+        type: text

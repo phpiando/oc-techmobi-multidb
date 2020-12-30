@@ -1,0 +1,16 @@
+fields:
+    prefix_db:
+        label: 'techmobi.multidb::lang.labels.prefix_db'
+        span: auto
+        default: tech_
+        type: text
+    db_name:
+        label: 'techmobi.multidb::lang.labels.db_name'
+        span: auto
+        default: hash
+        type: balloon-selector
+    plugins:
+        label: 'techmobi.multidb::lang.labels.plugins'
+        span: auto
+        type: checkboxlist
+        comment: 'techmobi.multidb::lang.comments.plugins'     
