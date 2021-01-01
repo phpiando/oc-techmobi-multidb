@@ -1,0 +1,6 @@
+plugin:
+    name: 'MultiDB'
+    description: ' Plugin to create SaaS applications in different databases, making it easier to manage multiple clients'
+    author: Techmobi
+    icon: oc-icon-adjust
+    homepage: ''
