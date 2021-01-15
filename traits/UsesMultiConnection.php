@@ -2,6 +2,7 @@
 
 use Config;
 use Request;
+use Session;
 use Techmobi\Multidb\Models\Domain;
 
 /**
@@ -39,7 +40,7 @@ trait UsesMultiConnection
 
     public function getDatabaseName()
     {
-        return $this->domain->db_name;
+        return Session::get('techmobi_dbname') ?? $this->domain->db_name;
     }
 
     private function getDomainData()

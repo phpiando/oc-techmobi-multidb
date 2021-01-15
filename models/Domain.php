@@ -2,6 +2,7 @@
 
 use Keios\Multisite\Models\Setting;
 use Model;
+use Techmobi\Multidb\Models\Settings;
 
 /**
  * Model
@@ -33,6 +34,19 @@ class Domain extends Model
             'otherKey' => 'site_id',
         ],
     ];
+
+    public function beforeCreate()
+    {
+        $dbName = trim(Settings::get('prefix_db')) . '';
+
+        if (Settings::get('db_name') == 'hash') {
+            $dbName .= uniqid();
+        } else {
+            $dbName .= str_slug($this->name, "_");
+        }
+
+        $this->db_name = $dbName;
+    }
 
     public function getSitesOptions()
     {

@@ -2,8 +2,8 @@
 
 use Artisan;
 use Exception;
+use Session;
 use Techmobi\Multidb\Models\Domain;
-use Techmobi\Multidb\Models\Settings;
 
 /**
  * Responsible for updating or creating the database.
@@ -45,24 +45,16 @@ class SyncDB
     {
         $dbName = $this->domain->db_name;
 
-        if (empty($this->domain->db_name)) {
-            $dbName = trim(Settings::get('prefix_db')) . '';
-
-            if (Settings::get('db_name') == 'hash') {
-                $dbName .= uniqid();
-            } else {
-                $dbName .= str_slug($this->domain->name, "_");
-            }
-        }
-
         $options = [
             '--dbname' => $dbName,
             '--dbconnection' => $this->connection,
         ];
 
+        //temporary dbname
+        Session::put('techmobi_dbname', $dbName);
+
         Artisan::call('multidb:dbcreate', $options);
 
-        $this->domain->db_name = $dbName;
-        $this->domain->save();
+        Session::forget('techmobi_dbname');
     }
 }
