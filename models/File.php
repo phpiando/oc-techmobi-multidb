@@ -62,7 +62,10 @@ class File extends FileBase
      */
     protected function getLocalRootPath()
     {
-        return Config::get('filesystems.disks.local.root', storage_path('app'));
+        $dir = Config::get('filesystems.disks.local.root', storage_path('app'));
+        $dir = "{$dir}/{$this->getDatabaseName()}";
+
+        return $dir;
     }
 
     /**
@@ -71,6 +74,8 @@ class File extends FileBase
     public function getPublicPath()
     {
         $uploadsPath = Config::get('cms.storage.uploads.path', '/storage/app/uploads');
+
+        $uploadsPath = str_replace("app/uploads", "app/{$this->getDatabaseName()}/uploads", $uploadsPath);
 
         if ($this->isPublic()) {
             $uploadsPath .= '/public';
