@@ -4,7 +4,6 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use Flash;
 use System\Classes\SettingsManager;
-use Techmobi\Multidb\Classes\SyncDB;
 use Techmobi\Multidb\Models\Domain;
 
 class Domains extends Controller
@@ -20,11 +19,6 @@ class Domains extends Controller
 
         BackendMenu::setContext('October.System', 'system', 'settings');
         SettingsManager::setContext('Techmobi.Multidb', 'multidb_domains');
-    }
-
-    public function formAfterSave($model)
-    {
-        SyncDB::instance()->startSyncDB($model);
     }
 
     public function onForceUpdateSelected()

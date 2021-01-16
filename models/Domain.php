@@ -1,7 +1,8 @@
 <?php namespace Techmobi\Multidb\Models;
 
-use Keios\Multisite\Models\Setting;
+use Keios\Multisite\Models\Setting as SettingMultisite;
 use Model;
+use Techmobi\Multidb\Classes\SyncDB;
 use Techmobi\Multidb\Models\Settings;
 
 /**
@@ -29,7 +30,7 @@ class Domain extends Model
 
     public $belongsToMany = [
         'sites' => [
-            Setting::class,
+            SettingMultisite::class,
             'table' => 'techmobi_multidb_multisites',
             'otherKey' => 'site_id',
         ],
@@ -48,8 +49,13 @@ class Domain extends Model
         $this->db_name = $dbName;
     }
 
+    public function afterSave()
+    {
+        SyncDB::instance()->startSyncDB($this);
+    }
+
     public function getSitesOptions()
     {
-        return Setting::lists('domain', 'id');
+        return SettingMultisite::lists('domain', 'id');
     }
 }
