@@ -27,7 +27,7 @@ trait UsesMultiConnection
     {
         $this->getDomainData();
 
-        if (!$this->domain) {
+        if (!$this->getDatabaseName()) {
             return false;
         }
 
