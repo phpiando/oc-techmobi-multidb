@@ -1,7 +1,9 @@
 <?php namespace Techmobi\Multidb\Traits;
 
 use Config;
+use DB;
 use Request;
+use Schema;
 use Session;
 use Techmobi\Multidb\Models\Domain;
 
@@ -29,18 +31,22 @@ trait UsesMultiConnection
             return false;
         }
 
-        $default = env('MULTIDB_CONNECTION', 'multidb');
+        $connection = env('MULTIDB_CONNECTION', 'multidb');
 
-        $this->connection = $default;
-        $this->table = $this->getDatabaseName() . '.' . $this->table;
-        // Config::set('database.default', $default);
-        Config::set('database.connections.multidb.database', $this->getDatabaseName());
-        \Db::connection($this->connection)->reconnect();
+        $dbTable = $this->getDatabaseName() . '.' . $this->table;
+
+        /*if table not exists in new schema use the table in the database default*/
+        if (Schema::hasTable($this->table)) {
+            $this->connection = $connection;
+            $this->table = $dbTable;
+
+            DB::connection($this->connection)->reconnect();
+        }
     }
 
     public function getDatabaseName()
     {
-        return Session::get('techmobi_dbname') ?? $this->domain->db_name;
+        return Session::get('techmobi_dbname') ?? ($this->domain->db_name ?? '');
     }
 
     private function getDomainData()
@@ -51,10 +57,13 @@ trait UsesMultiConnection
 
         $currentHostUrl = Request::getHost();
 
-        $this->domain = Domain::whereHas('sites', function ($query) use ($currentHostUrl) {
-            $query->where('domain', 'like', '%' . $currentHostUrl . '%');
-        })->first();
+        if (Schema::hasTable((new Domain)->table)) {
+            $this->domain = Domain::whereHas('sites', function ($query) use ($currentHostUrl) {
+                $query->where('domain', 'like', '%' . $currentHostUrl . '%');
+            })->first();
+        }
 
         Config::set('database.default', $connectionDefault);
+        Config::set('database.connections.multidb.database', $this->getDatabaseName());
     }
 }
