@@ -4,6 +4,7 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use Flash;
 use System\Classes\SettingsManager;
+use Techmobi\Multidb\Classes\SyncDB;
 use Techmobi\Multidb\Models\Domain;
 
 class Domains extends Controller
