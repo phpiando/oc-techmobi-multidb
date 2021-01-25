@@ -201,6 +201,14 @@ class UpdateManager
                 $table->index(['namespace', 'group', 'item'], 'item_index');
             });
             $this->note('System Parameters table created');
+
+            Schema::create($this->database . '.system_settings', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->increments('id');
+                $table->string('item')->nullable()->index();
+                $table->mediumtext('value')->nullable();
+            });
+            $this->note('System Settings table created');
         } catch (Exception $except) {}
     }
 
