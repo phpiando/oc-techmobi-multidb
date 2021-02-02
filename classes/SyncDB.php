@@ -43,18 +43,23 @@ class SyncDB
 
     private function createDatabase()
     {
-        $dbName = $this->domain->db_name;
+        try {
+            $dbName = $this->domain->db_name;
 
-        $options = [
-            '--dbname' => $dbName,
-            '--dbconnection' => $this->connection,
-        ];
+            $options = [
+                '--dbname' => $dbName,
+                '--dbconnection' => $this->connection,
+            ];
 
-        //temporary dbname
-        Session::put('techmobi_dbname', $dbName);
+            //temporary dbname
+            Session::put('techmobi_dbname', $dbName);
 
-        Artisan::call('multidb:dbcreate', $options);
+            Artisan::call('multidb:dbcreate', $options);
 
-        Session::forget('techmobi_dbname');
+            Session::forget('techmobi_dbname');
+        } catch (Exception $e) {
+            Session::forget('techmobi_dbname');
+            throw $e;
+        }
     }
 }
