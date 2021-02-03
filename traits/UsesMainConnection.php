@@ -20,7 +20,7 @@ trait UsesMainConnection
 
     private function handleMainConnection()
     {
-        $connectionDefault = config('database.default');
+        $connectionDefault = config('database.original');
         $databaseDefault = config("database.connections.{$connectionDefault}.database");
 
         $this->table = $databaseDefault . '.' . $this->table;
