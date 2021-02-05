@@ -65,7 +65,10 @@ Navigate to `Settings -> MultiDB -> Hosts`, in this place you can add new databa
 With this configuration, it will be possible to identify the databases according to each domain accessed.
 
 ### Using in PHP Code
-After all configurations, it will be necessary to add the following trait to all models that have the replicated database, example:
+After making the configurations mentioned above, it is necessary to edit the models of the plugins.
+
+#### Trait UsesMultiConnection
+This trait is responsible for managing the data that will be saved in the databases. It will be necessary to add the following trait to all models that have the replicated database, example below:
 
 ```php
 class Product extends Model
@@ -75,7 +78,19 @@ class Product extends Model
 	...
 }
 ```
+#### Trait UsesMainConnection
+This Trait allows you to relate a table from the main database to the child database, for example, you have a Customers plugin, this plugin is using the UsesMultiConnection trait, however ou have a Core plugin that has a Country Model, this plugin you are not replicating, but you need to relate the `country_id` attribute of the customers table to the country table, in this situation there would be an error because MultiDB change connections momentarily, so as not to have a problem, you need to add in your model Country the trait below.
 
+```php
+class Product extends Model
+{
+    use \Techmobi\Multidb\Traits\UsesMainConnection;
+
+    ...
+}
+```
+
+#### BONUS: MultiFiles with MultiDB
 If in case you want to save the files in the new database, you will need to use the model `Techmobi\Multidb\Models\File`, example use:
 
 ```php
@@ -92,6 +107,37 @@ class Product extends Model
         ],
     ];
 
+    ...
+}
+```
+
+##### MediaLibrary
+For now I was unable to make a class to manage MediaLibrary, however you can change the file `System\Classes\MediaLibrary`, adding the following codes:
+
+```php
+class MediaLibrary
+{
+    use \October\Rain\Support\Traits\Singleton;
+    use \Techmobi\Multidb\Traits\UsesMultiConnection;
+
+    ...
+
+    protected function init()
+    {
+        $this->getDomainData();
+
+        //$this->storageFolder = self::validatePath(Config::get('cms.storage.media.folder', 'media'), true);
+        //$this->storagePath = rtrim(Config::get('cms.storage.media.path', '/storage/app/media'), '/');
+
+        $this->storageFolder = "/{$this->getDatabaseName()}/media";
+        $this->storagePath = "/storage/app/{$this->getDatabaseName()}/media";
+
+        $this->ignoreNames = Config::get('cms.storage.media.ignore', FileDefinitions::get('ignoreFiles'));
+
+        $this->ignorePatterns = Config::get('cms.storage.media.ignorePatterns', ['^\..*']);
+
+        $this->storageFolderNameLength = strlen($this->storageFolder);
+    }
     ...
 }
 ```
