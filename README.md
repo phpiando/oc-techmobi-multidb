@@ -24,11 +24,13 @@ composer require techmobi/multidb
 You will need to make a small change to the file in `config/database.php`
 ```php
 ...
-'original' => env('DB_CONNECTION', 'mysql'),
+
+'original' => env('DB_CONNECTION', 'mysql'), // <-- ADD THIS LINE
 
 'connections' => [
 	...
 
+    //ADD THIS ARRAY
 	'multidb' => [
         'driver' => 'mysql',
         'engine' => 'InnoDB',
