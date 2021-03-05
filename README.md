@@ -143,3 +143,10 @@ class MediaLibrary
     ...
 }
 ```
+
+## Events Change Schema
+An event has been added to force a database schema change, how does it work? Imagine that you have several databases created, however you do not want to be connecting at each URL, with that a database session was implemented, and below there is an event that you can pass a schema.
+
+```php
+    Event::fire('techmobi.schema.set', 'my_awesome_schema');
+```

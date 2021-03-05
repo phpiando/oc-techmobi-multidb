@@ -1,6 +1,8 @@
 <?php namespace Techmobi\Multidb;
 
 use Backend;
+use Event;
+use Session;
 use System\Classes\PluginBase;
 
 class Plugin extends PluginBase
@@ -8,6 +10,16 @@ class Plugin extends PluginBase
     public $require = [
         'Keios.Multisite',
     ];
+
+    public function boot()
+    {
+        /**
+         * Force change schema in backend
+         */
+        Event::listen('techmobi.schema.set', function ($schema) {
+            Session::put('techmobi_dbname', $schema);
+        });
+    }
 
     public function register()
     {
