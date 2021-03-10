@@ -128,11 +128,13 @@ class MediaLibrary
     {
         $this->getDomainData();
 
-        //$this->storageFolder = self::validatePath(Config::get('cms.storage.media.folder', 'media'), true);
-        //$this->storagePath = rtrim(Config::get('cms.storage.media.path', '/storage/app/media'), '/');
-
-        $this->storageFolder = "/{$this->getDatabaseName()}/media";
-        $this->storagePath = "/storage/app/{$this->getDatabaseName()}/media";
+        if (!empty($this->getDatabaseName())) {
+            $this->storageFolder = "/{$this->getDatabaseName()}/media";
+            $this->storagePath = "/storage/app/{$this->getDatabaseName()}/media";
+        } else {
+            $this->storageFolder = self::validatePath(Config::get('cms.storage.media.folder', 'media'), true);
+            $this->storagePath = rtrim(Config::get('cms.storage.media.path', '/storage/app/media'), '/');
+        }
 
         $this->ignoreNames = Config::get('cms.storage.media.ignore', FileDefinitions::get('ignoreFiles'));
 

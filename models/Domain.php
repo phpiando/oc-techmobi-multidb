@@ -54,6 +54,11 @@ class Domain extends Model
         SyncDB::instance()->startSyncDB($this);
     }
 
+    public function scopeHasSyncUpdate($query)
+    {
+        return $query->where('has_sync_update', 1);
+    }
+
     public function getSitesOptions()
     {
         return SettingMultisite::lists('domain', 'id');

@@ -12,7 +12,7 @@ class BuilderTableCreateTechmobiMultidbDomains extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 400)->nullable();
             $table->boolean('waiting_sync')->default(1)->nullable();
-            $table->boolean('has_sync_update')->nullable();
+            $table->boolean('has_sync_update')->nullable()->default(1);
             $table->boolean('has_user_db')->nullable();
             $table->string('db_host')->nullable();
             $table->string('db_port')->nullable();

@@ -36,7 +36,7 @@ class Domains extends Controller
 
     public function onForceUpdateAll()
     {
-        $domains = Domain::get();
+        $domains = Domain::hasSyncUpdate()->get();
 
         foreach ($domains as $model) {
             SyncDB::instance()->startSyncDB($model);
